@@ -133,7 +133,7 @@ def parseRoll(userInput):
             elif letter.isalpha():
                 advantage += letter
                 parsingThirdHalf = True
-
+    advantage = advantage.lower()
     if advantage == "adv" or advantage == "Adv" or advantage == "ADV":
         adv = 1
     elif advantage == "dis" or advantage == "Dis" or advantage == "DIS":

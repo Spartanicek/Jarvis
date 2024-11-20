@@ -1,7 +1,7 @@
 import sys
 from functools import partial
 
-import pluginmanager
+import PluginManager
 
 import plugin
 from utilities.GeneralUtilities import warning, error, executable_exists

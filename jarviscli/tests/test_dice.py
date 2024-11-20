@@ -15,6 +15,12 @@ class RollTest(PluginTest):
         self.assertEqual(d["edges"], 6)
         self.assertFalse(self.dice._dice_is_error_in_config(d))
 
+        d = self.dice._dice_parse("Roll a dice")
+        self.assertEqual(d["repeat"], 1)
+        self.assertEqual(d["howmany"], 1)
+        self.assertEqual(d["edges"], 6)
+        self.assertFalse(self.dice._dice_is_error_in_config(d))
+        
         d = self.dice._dice_parse("Roll four dices with 16 edges")
         self.assertEqual(d["repeat"], 1)
         self.assertEqual(d["howmany"], 4)
@@ -35,9 +41,7 @@ class RollTest(PluginTest):
         self.assertTrue(self.dice._dice_is_error_in_config(d))
 
     def test_dice_roll(self):
-        # test repeats
         for _ in range(5):
-            # random config
             edges = random.randint(2, 10)
             repeat = random.randint(1, 10)
             howmany = random.randint(1, 10)
@@ -45,11 +49,9 @@ class RollTest(PluginTest):
             config = {"repeat": repeat, "howmany": howmany, "edges": edges}
             result_check = [False] * edges
 
-            # execute "roll" 500 times
             for _ in range(500):
                 d = [x for x in self.dice._dice_roll(config)]
 
-                # validate
                 self.assertEqual(len(d), repeat)
                 for row in d:
                     self.assertEqual(len(row), howmany)
@@ -58,7 +60,6 @@ class RollTest(PluginTest):
                         self.assertTrue(number > 0)
                         self.assertTrue(number <= edges)
 
-            # make sure every number was thrown
                         result_check[number - 1] = True
 
             for b in result_check:
